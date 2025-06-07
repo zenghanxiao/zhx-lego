@@ -29,6 +29,7 @@ declare module 'vue' {
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     LText: typeof import('./src/components/LText.vue')['default']
+    PropsTable: typeof import('./src/components/PropsTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TemplateList: typeof import('./src/components/TemplateList.vue')['default']

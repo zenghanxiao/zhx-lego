@@ -6,6 +6,7 @@ import ComponentsList from '@/components/ComponentsList.vue'
 import LText from '@/components/LText.vue'
 import defaultTextTemplates from '@/utils/defaultTemplates'
 import EditWrapper from '@/components/EditWrapper.vue'
+import PropsTable from '@/components/PropsTable.vue'
 
 const componentsMap = shallowReactive<Record<string, Component>>({
   'l-text': LText,
@@ -65,7 +66,10 @@ const setActive = (id: string) => {
       </a-layout>
       <a-layout-sider width="300" style="background: #fff" class="settings-panel">
         组件属性
-        <pre>{{ editorStore.getCurrentElement?.props }}</pre>
+        <props-table
+          v-if="editorStore.getCurrentElement"
+          :cProps="editorStore.getCurrentElement.props"
+        ></props-table>
       </a-layout-sider>
     </a-layout>
   </div>

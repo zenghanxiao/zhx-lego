@@ -6,8 +6,8 @@ import { useRestProps } from '@/hooks/useRestProps'
 interface IProps {
   tag: string
 }
-type LProps = IProps & TextComponentProps
-const props = withDefaults(defineProps<Partial<LProps>>(), {
+type LProps = Partial<IProps & TextComponentProps>
+const props = withDefaults(defineProps<LProps>(), {
   tag: 'div',
   ...textDefaultProps,
 })
