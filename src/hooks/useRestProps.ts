@@ -1,7 +1,8 @@
+import type { TextComponentProps } from '@/types/defaultProps'
 import { omit } from 'lodash-es'
 import { computed } from 'vue'
 
-export const useRestProps = <T extends { [key: string]: any }>(props: T, omits: string[]) => {
+export const useRestProps = (props: Readonly<Partial<TextComponentProps>>, omits: string[]) => {
   const restProps = computed(() => {
     return omit(props, omits)
   })

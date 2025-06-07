@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { message } from 'ant-design-vue'
 
 export interface ComponentData {
   // 这个元素的 属性，属性请详见下面
@@ -80,8 +81,37 @@ export const testCompoents: ComponentData[] = [
 export const useEditorStore = defineStore('editor', () => {
   const components = ref<ComponentData[]>(testCompoents)
   const currentElement = ref<string>('')
+
+  const getCurrentElement = computed(() => {
+    return components.value.find((item) => {
+      return item.id === currentElement.value
+    })
+  })
+
+  function addComponent(component: ComponentData) {
+    components.value.push(component)
+  }
+
+  function deleteComponent(id: string) {
+    const index = components.value.findIndex((item) => {
+      return item.id === id
+    })
+    if (index > -1) {
+      components.value.splice(index, 1)
+      message.success('删除当前图层成功', 1)
+    }
+  }
+
+  function setActive(id: string) {
+    currentElement.value = id
+  }
+
   return {
     components,
     currentElement,
+    getCurrentElement,
+    addComponent,
+    deleteComponent,
+    setActive,
   }
 })

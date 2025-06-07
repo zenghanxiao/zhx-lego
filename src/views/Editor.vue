@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useEditorStore } from '@/stores/editor'
+import { useEditorStore, type ComponentData } from '@/stores/editor'
 import { ref, shallowReactive } from 'vue'
 import type { Component } from 'vue'
 import ComponentsList from '@/components/ComponentsList.vue'
 import LText from '@/components/LText.vue'
 import defaultTextTemplates from '@/utils/defaultTemplates'
+import EditWrapper from '@/components/EditWrapper.vue'
 
 const componentsMap = shallowReactive<Record<string, Component>>({
   'l-text': LText,
@@ -14,7 +15,13 @@ const editorStore = useEditorStore()
 
 const canvasFix = ref(false)
 
-const addItem = () => {}
+const addItem = (data: ComponentData) => {
+  editorStore.addComponent(data)
+}
+
+const setActive = (id: string) => {
+  editorStore.setActive(id)
+}
 </script>
 
 <template>
@@ -43,17 +50,23 @@ const addItem = () => {}
           <p>画布区域</p>
           <div class="preview-list" id="canvas-area" :class="{ 'canvas-fix': canvasFix }">
             <div class="body-container">
-              <component
+              <edit-wrapper
                 v-for="component in editorStore.components"
                 :key="component.id"
-                :is="componentsMap[component.name]"
-                v-bind="component.props"
-              />
+                :id="component.id"
+                :active="component.id === editorStore.currentElement"
+                @set-active="setActive"
+              >
+                <component :is="componentsMap[component.name]" v-bind="component.props" />
+              </edit-wrapper>
             </div>
           </div>
         </a-layout-content>
       </a-layout>
-      <a-layout-sider width="300" style="background: #fff" class="settings-panel"> </a-layout-sider>
+      <a-layout-sider width="300" style="background: #fff" class="settings-panel">
+        组件属性
+        <pre>{{ editorStore.getCurrentElement?.props }}</pre>
+      </a-layout-sider>
     </a-layout>
   </div>
 </template>
