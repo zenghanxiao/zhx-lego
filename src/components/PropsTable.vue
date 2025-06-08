@@ -3,7 +3,11 @@ import { textDefaultProps, type TextComponentProps } from '@/types/defaultProps'
 import { mapPropsToForms, type PropsToForms } from '@/utils/propsMap'
 import { reduce } from 'lodash-es'
 import { computed, shallowReactive, type Component } from 'vue'
-import { Input as AInput } from 'ant-design-vue'
+import {
+  InputNumber as AInputNumber,
+  Slider as ASlider,
+  Textarea as ATextarea,
+} from 'ant-design-vue'
 
 interface IProps {
   cProps: Partial<TextComponentProps>
@@ -16,7 +20,9 @@ const allTextProps = computed(() => {
 })
 
 const componentsMap = shallowReactive<Record<string, Component>>({
-  'a-input': AInput,
+  'a-textarea': ATextarea,
+  'a-input-number': AInputNumber,
+  'a-slider': ASlider,
 })
 
 const finalProps = computed(() => {
@@ -31,19 +37,29 @@ const finalProps = computed(() => {
       }
       return result
     },
-    {} as PropsToForms,
+    {} as Required<PropsToForms>,
   )
 })
 </script>
 
 <template>
   <div class="props-table">
-    <div v-for="(value, index) in finalProps" :key="index" class="prop-item">
-      <component
-        v-if="value"
-        :is="componentsMap[value.component] || value.component"
-        :value="value.value"
-      />
+    <div
+      v-for="(value, index) in finalProps"
+      :key="index"
+      :class="{ 'no-text': !value.text }"
+      class="prop-item"
+      :id="`item-${index}`"
+    >
+      <span class="label" v-if="value.text">{{ value.text }}</span>
+      <div :class="`prop-component component-${value.component}`">
+        <component
+          v-if="value"
+          :is="componentsMap[value.component] || value.component"
+          :value="value.value"
+          v-bind="value.extraProps"
+        />
+      </div>
     </div>
   </div>
 </template>
