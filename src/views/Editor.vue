@@ -23,6 +23,10 @@ const addItem = (data: ComponentData) => {
 const setActive = (id: string) => {
   editorStore.setActive(id)
 }
+
+const pageChange = (e: any) => {
+  editorStore.updatePage(e)
+}
 </script>
 
 <template>
@@ -69,6 +73,7 @@ const setActive = (id: string) => {
         <props-table
           v-if="editorStore.getCurrentElement"
           :cProps="editorStore.getCurrentElement.props"
+          @change="pageChange"
         ></props-table>
       </a-layout-sider>
     </a-layout>

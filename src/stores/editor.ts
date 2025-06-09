@@ -107,6 +107,15 @@ export const useEditorStore = defineStore('editor', () => {
     currentElement.value = id
   }
 
+  function updatePage({ key, value }: { key: string; value: string }) {
+    const curEle = components.value.find((item) => {
+      return item.id === currentElement.value
+    })
+    if (curEle) {
+      curEle.props[key as keyof TextComponentProps] = value
+    }
+  }
+
   return {
     components,
     currentElement,
@@ -114,5 +123,6 @@ export const useEditorStore = defineStore('editor', () => {
     addComponent,
     deleteComponent,
     setActive,
+    updatePage,
   }
 })
