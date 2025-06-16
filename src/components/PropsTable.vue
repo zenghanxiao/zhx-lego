@@ -3,7 +3,6 @@ import { textDefaultProps, type TextComponentProps } from '@/types/defaultProps'
 import { mapPropsToForms } from '@/utils/propsMap.tsx'
 import { reduce } from 'lodash-es'
 import { computed, shallowReactive, type Component, type VNode } from 'vue'
-import RenderVnode from './RenderVnode'
 import {
   InputNumber as AInputNumber,
   Slider as ASlider,
@@ -13,6 +12,9 @@ import {
   RadioGroup as ARadioGroup,
   RadioButton as ARadioButton,
 } from 'ant-design-vue'
+
+import RenderVnode from './RenderVnode.ts'
+import ColorPicker from './ColorPicker.vue'
 
 interface FormProps {
   component: string
@@ -50,6 +52,7 @@ const componentsMap = shallowReactive<Record<string, Component>>({
   'a-select-option': ASelectOption,
   'a-radio-group': ARadioGroup,
   'a-radio-button': ARadioButton,
+  'color-picker': ColorPicker,
 })
 
 const finalProps = computed(() => {
