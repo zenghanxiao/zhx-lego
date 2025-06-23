@@ -4,12 +4,14 @@ import { ref, shallowReactive } from 'vue'
 import type { Component } from 'vue'
 import ComponentsList from '@/components/ComponentsList.vue'
 import LText from '@/components/LText.vue'
+import LImage from '@/components/LImage.vue'
 import defaultTextTemplates from '@/utils/defaultTemplates'
 import EditWrapper from '@/components/EditWrapper.vue'
 import PropsTable from '@/components/PropsTable.vue'
 
 const componentsMap = shallowReactive<Record<string, Component>>({
   'l-text': LText,
+  'l-image': LImage,
 })
 
 const editorStore = useEditorStore()

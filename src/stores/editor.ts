@@ -2,12 +2,11 @@ import { v4 as uuidv4 } from 'uuid'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { message } from 'ant-design-vue'
-import type { TextComponentProps } from '@/types/defaultProps'
+import type { AllComponentProps, TextComponentProps } from '@/types/defaultProps'
 
 export interface ComponentData {
   // 这个元素的 属性，属性请详见下面
-  // props: Partial<AllComponentProps>;
-  props: Partial<TextComponentProps>
+  props: Partial<AllComponentProps>
   // id，uuid v4 生成
   id: string
   // 业务组件库名称 l-text，l-image 等等
